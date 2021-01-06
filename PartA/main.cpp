@@ -60,15 +60,18 @@ int main(int argc, char *argv[])
     
     // Input matrix A
     int *matA = new int[N * N];
+	unsigned short cnt = 0;
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
-            input_file >> matA[i * N + j];
+		matA[i*N+j] = cnt++;
+//            input_file >> matA[i * N + j];
 
     // Input matrix B
     int *matB = new int[N * N];
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
-            input_file >> matB[i * N + j];
+		matB[i*N+j] = cnt++;
+//            input_file >> matB[i * N + j];
     
     // Untimed, warmup caches and TLB
     int *output_reference = new int[2 * N - 1];
