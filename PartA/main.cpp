@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     
     // Input matrix A
     int *matA = new int[N * N];
-unsigned short cnt = 0;
+    unsigned short cnt = 0;
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
 		matA[i*N+j] = cnt++;
