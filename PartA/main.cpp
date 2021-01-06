@@ -13,7 +13,7 @@ using namespace std;
 #include "multi_thread.h"
 
 // Used to cross-check answer. DO NOT MODIFY!
-void reference(int N, int *matA, int *matB, int *output)
+void dummy_reference(int N, int *matA, int *matB, int *output)
 {
     // Iterate over first half of output elements
     for(int i = 0; i < N; ++i) {
@@ -44,6 +44,41 @@ void reference(int N, int *matA, int *matB, int *output)
     }
 }
 
+void reference(int N, int *matA, int *matB, int *output)
+{
+    // Iterate over first half of output elements
+    for (int i = 0; i < N; ++i)
+    {
+        int temp = 0;
+        // Iterate over diagonal elements
+        for (int j = 0; j < i + 1; ++j)
+        {
+            int rowA = j;
+            int colA = i - j;
+            int rowB = i - j;
+            int colB = N - j - 1;
+            temp += matA[rowA * N + colA] * matB[rowB * N + colB];
+        }
+        output[i] = temp;
+    }
+
+    // Iterate over second half of output elements
+    for (int i = N; i < 2 * N - 1; ++i)
+    {
+        int temp = 0;
+        // Iterate over diagonal elements
+        for (int j = 0; j < 2 * N - (i + 1); ++j)
+        {
+            int rowA = i + 1 + j - N;
+            int colA = N - j - 1;
+            int rowB = N - j - 1;
+            int colB = 2 * N - j - 2 - i;
+            temp += matA[rowA * N + colA] * matB[rowB * N + colB];
+        }
+        output[i] = temp;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     // Input size of square matrices
@@ -60,31 +95,43 @@ int main(int argc, char *argv[])
     
     // Input matrix A
     int *matA = new int[N * N];
+unsigned short cnt = 0;
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
-            input_file >> matA[i * N + j];
+		matA[i*N+j] = cnt++;
+//            input_file >> matA[i * N + j];
 
     // Input matrix B
     int *matB = new int[N * N];
+    // int *matB = (int *)aligned_alloc(128, sizeof(int) * N * N);
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
-            input_file >> matB[i * N + j];
+		matB[i*N+j] = cnt++;
+//            input_file >> matB[i * N + j];
     
     // Untimed, warmup caches and TLB
     int *output_reference = new int[2 * N - 1];
-    reference(N, matA, matB, output_reference);    
-    
+    dummy_reference(N, matA, matB, output_reference);
+
+    // __itt_domain *domain = __itt_domain_create("DiagMM.Domain.Global");
+    // __itt_string_handle *handle_ref = __itt_string_handle_create("Reference implematation");
+    // __itt_string_handle *handle_cust = __itt_string_handle_create("Single Thread implematation");
+
     // Execute reference program
     auto begin = TIME_NOW;
+    // __itt_task_begin(domain, __itt_null, __itt_null, handle_ref);
     reference(N, matA, matB, output_reference);
+    // __itt_task_end(domain);
     auto end = TIME_NOW;
     cout << "Reference execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";    
     
     // Execute single thread
     int *output_single = new int[2 * N - 1];
     begin = TIME_NOW;
+    // __itt_task_begin(domain, __itt_null, __itt_null, handle_cust);
     singleThread(N, matA, matB, output_single);
     end = TIME_NOW;
+    // __itt_task_end(domain);
     cout << "Single thread execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
     
     for(int i = 0; i < 2 * N - 1; ++i)
