@@ -135,6 +135,8 @@ int main(int argc, char *argv[])
             cout << "Mismatch at " << i << "\n";
             exit(0);
         }
+
+	if(argc==3) return 0;
     
     // Execute multi-thread
     int *output_multi = new int[2 * N - 1];

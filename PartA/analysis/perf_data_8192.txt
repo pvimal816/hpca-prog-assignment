@@ -1,0 +1,97 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 16K of event 'L1-dcache-load-misses:u'
+# Event count (approx.): 583178526
+#
+# Overhead  Command    Shared Object     Symbol                    
+# ........  .........  ................  ..........................
+#
+    43.04%  diag_mult  diag_mult         [.] dummy_reference
+    42.94%  diag_mult  diag_mult         [.] reference
+    13.73%  diag_mult  diag_mult         [.] singleThread
+     0.26%  diag_mult  [kernel]          [k] 0xffffffffb2d6b730
+     0.02%  diag_mult  diag_mult         [.] main
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_relocate_object
+     0.00%  diag_mult  ld-2.17.so        [.] strcmp
+     0.00%  diag_mult  ld-2.17.so        [.] check_match.9523
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_lookup_symbol_x
+     0.00%  diag_mult  ld-2.17.so        [.] do_lookup_x
+     0.00%  diag_mult  libc-2.17.so      [.] _dl_addr
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_check_map_versions
+     0.00%  diag_mult  ld-2.17.so        [.] match_symbol
+     0.00%  diag_mult  [kernel]          [k] 0xffffffffb2d75c90
+     0.00%  diag_mult  libc-2.17.so      [.] _int_malloc
+     0.00%  diag_mult  libc-2.17.so      [.] sysmalloc
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_start
+
+
+# Samples: 14K of event 'LLC-load-misses:u'
+# Event count (approx.): 23192357
+#
+# Overhead  Command    Shared Object     Symbol                 
+# ........  .........  ................  .......................
+#
+    38.38%  diag_mult  diag_mult         [.] dummy_reference
+    38.10%  diag_mult  diag_mult         [.] reference
+    22.97%  diag_mult  diag_mult         [.] singleThread
+     0.53%  diag_mult  [kernel]          [k] 0xffffffffb2d6b730
+     0.01%  diag_mult  [kernel]          [k] 0xffffffffb2d75c90
+     0.00%  diag_mult  ld-2.17.so        [.] check_match.9523
+     0.00%  diag_mult  ld-2.17.so        [.] strcmp
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_relocate_object
+     0.00%  diag_mult  libc-2.17.so      [.] _int_malloc
+     0.00%  diag_mult  ld-2.17.so        [.] dl_main
+     0.00%  diag_mult  ld-2.17.so        [.] _dl_start
+
+
+# Samples: 504  of event 'LLC-store-misses:u'
+# Event count (approx.): 5890
+#
+# Overhead  Command    Shared Object        Symbol                
+# ........  .........  ...................  ......................
+#
+    41.48%  diag_mult  diag_mult            [.] reference
+    30.76%  diag_mult  [kernel]             [k] 0xffffffffb2d6b730
+    26.57%  diag_mult  diag_mult            [.] dummy_reference
+     0.39%  diag_mult  ld-2.17.so           [.] _dl_fixup
+     0.34%  diag_mult  ld-2.17.so           [.] memset
+     0.34%  diag_mult  libc-2.17.so         [.] __uselocale
+     0.08%  diag_mult  libc-2.17.so         [.] _int_malloc
+     0.02%  diag_mult  libc-2.17.so         [.] sysmalloc
+     0.02%  diag_mult  libstdc++.so.6.0.19  [.] operator new[]
+
+
+# Samples: 3K of event 'branch-misses:u'
+# Event count (approx.): 74715
+#
+# Overhead  Command    Shared Object        Symbol                     
+# ........  .........  ...................  ...........................
+#
+    22.34%  diag_mult  diag_mult            [.] singleThread
+    21.40%  diag_mult  diag_mult            [.] dummy_reference
+    21.32%  diag_mult  diag_mult            [.] main
+    15.32%  diag_mult  diag_mult            [.] reference
+     6.31%  diag_mult  [kernel]             [k] 0xffffffffb2d6b730
+     3.79%  diag_mult  libc-2.17.so         [.] _dl_addr
+     3.16%  diag_mult  libstdc++.so.6.0.19  [.] operator new
+     2.48%  diag_mult  ld-2.17.so           [.] do_lookup_x
+     1.73%  diag_mult  ld-2.17.so           [.] strcmp
+     0.70%  diag_mult  ld-2.17.so           [.] check_match.9523
+     0.35%  diag_mult  ld-2.17.so           [.] _dl_relocate_object
+     0.32%  diag_mult  ld-2.17.so           [.] _dl_lookup_symbol_x
+     0.22%  diag_mult  ld-2.17.so           [.] _dl_determine_tlsoffset
+     0.15%  diag_mult  ld-2.17.so           [.] match_symbol
+     0.14%  diag_mult  ld-2.17.so           [.] _dl_check_map_versions
+     0.13%  diag_mult  libc-2.17.so         [.] vfprintf
+     0.06%  diag_mult  ld-2.17.so           [.] _dl_start
+     0.03%  diag_mult  libc-2.17.so         [.] malloc
+     0.02%  diag_mult  libc-2.17.so         [.] __strlen_sse2_pminub
+     0.02%  diag_mult  libstdc++.so.6.0.19  [.] std::locale::id::_M_id
+
+
+#
+# (Tip: If you have debuginfo enabled, try: perf report -s sym,srcline)
+#

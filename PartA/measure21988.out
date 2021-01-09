@@ -1,0 +1,136 @@
+cl-gpusrv1.nis.csa.iisc.ac.in
+/var/spool/slurmd/job21988/slurm_script: line 10: cd: /home/vimalm/hpca-assignment-2020-2021/PartA: No such file or directory
+Input matrix of size 4096
+Reference execution time: 256.919 ms
+Single thread execution time: 97.195 ms
+Multi-threaded execution time(2 threads): 140.631 ms
+Multi-threaded execution time(4 threads): 100.301 ms
+Multi-threaded execution time(8 threads): 55.254 ms
+Multi-threaded execution time(16 threads): 49.75 ms
+Multi-threaded execution time(32 threads): 47.128 ms
+Multi-threaded execution time(64 threads): 48.501 ms
+Multi-threaded execution time(128 threads): 54.99 ms
+Multi-threaded execution time(256 threads): 63.589 ms
+Input matrix of size 8192
+Reference execution time: 1559.5 ms
+Single thread execution time: 534.103 ms
+Multi-threaded execution time(2 threads): 480.501 ms
+Multi-threaded execution time(4 threads): 285.853 ms
+Multi-threaded execution time(8 threads): 174.826 ms
+Multi-threaded execution time(16 threads): 129.352 ms
+Multi-threaded execution time(32 threads): 127.009 ms
+Multi-threaded execution time(64 threads): 101.013 ms
+Multi-threaded execution time(128 threads): 155.885 ms
+Multi-threaded execution time(256 threads): 150.32 ms
+Input matrix of size 16384
+Reference execution time: 7801.96 ms
+Single thread execution time: 2176.34 ms
+Multi-threaded execution time(2 threads): 1895.27 ms
+Multi-threaded execution time(4 threads): 1078.8 ms
+Multi-threaded execution time(8 threads): 635.677 ms
+Multi-threaded execution time(16 threads): 417.022 ms
+Multi-threaded execution time(32 threads): 358.934 ms
+Multi-threaded execution time(64 threads): 313.194 ms
+Multi-threaded execution time(128 threads): 366.296 ms
+Multi-threaded execution time(256 threads): 517.379 ms
+Input matrix of size 32768
+Reference execution time: 42837.8 ms
+Single thread execution time: 13363.6 ms
+Multi-threaded execution time(2 threads): 7959.44 ms
+Multi-threaded execution time(4 threads): 4440.06 ms
+Multi-threaded execution time(8 threads): 2614.99 ms
+Multi-threaded execution time(16 threads): 1681.4 ms
+Multi-threaded execution time(32 threads): 1293.21 ms
+Multi-threaded execution time(64 threads): 1148.38 ms
+Multi-threaded execution time(128 threads): 1118.44 ms
+Multi-threaded execution time(256 threads): 1273.85 ms
+Input matrix of size 4096
+Reference execution time: 264.85 ms
+Single thread execution time: 98.189 ms
+Multi-threaded execution time(2 threads): 144.944 ms
+Multi-threaded execution time(4 threads): 106.508 ms
+Multi-threaded execution time(8 threads): 69.349 ms
+Multi-threaded execution time(16 threads): 69.633 ms
+Multi-threaded execution time(32 threads): 59.699 ms
+Multi-threaded execution time(64 threads): 76.788 ms
+Multi-threaded execution time(128 threads): 130.297 ms
+Multi-threaded execution time(256 threads): 238.65 ms
+[ perf record: Woken up 13 times to write data ]
+Warning:
+48716 out of order events recorded.
+[ perf record: Captured and wrote 11.685 MB /home/vimalm/perf_data_4096.out (51861 samples) ]
+Warning:
+48716 out of order events recorded.
+Input matrix of size 8192
+Reference execution time: 1630.3 ms
+Single thread execution time: 560.08 ms
+Multi-threaded execution time(2 threads): 516.977 ms
+Multi-threaded execution time(4 threads): 310.165 ms
+Multi-threaded execution time(8 threads): 195.742 ms
+Multi-threaded execution time(16 threads): 136.905 ms
+Multi-threaded execution time(32 threads): 119.095 ms
+Multi-threaded execution time(64 threads): 129.904 ms
+Multi-threaded execution time(128 threads): 162.13 ms
+Multi-threaded execution time(256 threads): 255.232 ms
+[ perf record: Woken up 29 times to write data ]
+0xa34870 [0]: failed to process type: 19964545
+Warning:
+14808 out of order events recorded.
+[ perf record: Captured and wrote 20.129 MB /home/vimalm/perf_data_8192.out (95533 samples) ]
+0xa34870 [0]: failed to process type: 19964545
+Warning:
+14808 out of order events recorded.
+Error:
+failed to process sample
+Input matrix of size 16384
+Reference execution time: 7624.34 ms
+Single thread execution time: 2188.67 ms
+Multi-threaded execution time(2 threads): 2006.73 ms
+Multi-threaded execution time(4 threads): 1114.8 ms
+Multi-threaded execution time(8 threads): 661.407 ms
+Multi-threaded execution time(16 threads): 433.252 ms
+Multi-threaded execution time(32 threads): 356.176 ms
+Multi-threaded execution time(64 threads): 337.985 ms
+Multi-threaded execution time(128 threads): 401.208 ms
+Multi-threaded execution time(256 threads): 457.753 ms
+[ perf record: Woken up 115 times to write data ]
+0x1fdff70 [0x48]: failed to process type: 8
+Warning:
+31546 out of order events recorded.
+[ perf record: Captured and wrote 52.201 MB /home/vimalm/perf_data_16384.out (438068 samples) ]
+0x1fdff70 [0x48]: failed to process type: 8
+Warning:
+31546 out of order events recorded.
+Error:
+failed to process sample
+Input matrix of size 32768
+Reference execution time: 44391.8 ms
+Single thread execution time: 13745.5 ms
+Multi-threaded execution time(2 threads): 9173.77 ms
+Multi-threaded execution time(4 threads): 4921.59 ms
+Multi-threaded execution time(8 threads): 2587.89 ms
+Multi-threaded execution time(16 threads): 1612.17 ms
+Multi-threaded execution time(32 threads): 1201.02 ms
+Multi-threaded execution time(64 threads): 1203.26 ms
+Multi-threaded execution time(128 threads): 1324.41 ms
+Multi-threaded execution time(256 threads): 1362.43 ms
+[ perf record: Woken up 400 times to write data ]
+0x677ccb0 [0x2]: failed to process type: 153449
+Warning:
+Processed 2153098 events and lost 6 chunks!
+
+Check IO/CPU overload!
+
+Warning:
+117879 out of order events recorded.
+[ perf record: Captured and wrote 133.498 MB /home/vimalm/perf_data_32768.out (1524611 samples) ]
+0x677ccb0 [0x2]: failed to process type: 153449
+Warning:
+Processed 2153098 events and lost 6 chunks!
+
+Check IO/CPU overload!
+
+Warning:
+117879 out of order events recorded.
+Error:
+failed to process sample
