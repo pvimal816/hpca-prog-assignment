@@ -1,0 +1,46 @@
+cl-gpusrv1.nis.csa.iisc.ac.in
+partition: cl1_all_64C
+
+Input matrix of size 4096
+Reference execution time: 314.808 ms
+Single thread execution time: 152.454 ms
+Multi-threaded execution time(2 threads): 59.156 ms
+Multi-threaded execution time(4 threads): 56.151 ms
+Multi-threaded execution time(8 threads): 56.037 ms
+Multi-threaded execution time(16 threads): 54.56 ms
+Multi-threaded execution time(32 threads): 68.121 ms
+Multi-threaded execution time(64 threads): 55.388 ms
+Multi-threaded execution time(128 threads): 58.141 ms
+
+Input matrix of size 8192
+Reference execution time: 2107.35 ms
+Single thread execution time: 598.916 ms
+Multi-threaded execution time(2 threads): 154.105 ms
+Multi-threaded execution time(4 threads): 164.686 ms
+Multi-threaded execution time(8 threads): 158.003 ms
+Multi-threaded execution time(16 threads): 160.761 ms
+Multi-threaded execution time(32 threads): 156.46 ms
+Multi-threaded execution time(64 threads): 153.234 ms
+Multi-threaded execution time(128 threads): 154.842 ms
+
+Input matrix of size 16384
+Reference execution time: 8339.88 ms
+Single thread execution time: 2417.13 ms
+Multi-threaded execution time(2 threads): 567.322 ms
+Multi-threaded execution time(4 threads): 564.075 ms
+Multi-threaded execution time(8 threads): 544.284 ms
+Multi-threaded execution time(16 threads): 561.764 ms
+Multi-threaded execution time(32 threads): 565.638 ms
+Multi-threaded execution time(64 threads): 573.245 ms
+Multi-threaded execution time(128 threads): 563.268 ms
+
+Input matrix of size 32768
+Reference execution time: 35199.3 ms
+Single thread execution time: 9942.73 ms
+Multi-threaded execution time(2 threads): 2230.32 ms
+Multi-threaded execution time(4 threads): 2333.98 ms
+Multi-threaded execution time(8 threads): 2339.08 ms
+Multi-threaded execution time(16 threads): 2370.54 ms
+Multi-threaded execution time(32 threads): 2276.93 ms
+Multi-threaded execution time(64 threads): 2261.6 ms
+Multi-threaded execution time(128 threads): 2218.09 ms

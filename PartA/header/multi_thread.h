@@ -1,28 +1,32 @@
 #include <pthread.h>
 #include <cstring>
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <smmintrin.h>
-#include <immintrin.h>
 
 int n = 0;
 int *a = NULL;
 int *c = NULL;
-const int NTHREADS = 4;
+int *op = NULL;
+int NTHREADS = 8;
 const int BS = 16; //cache block size
-
 void *rotate_worker(void *arg)
 {
     int id = *((int *)arg);
-    for (int i = id*BS; i + BS - 1 < n; i += BS * NTHREADS)
+    int end = (id+1)*n/NTHREADS;
+    //process data in 16x16 block to reduce LLC misses.
+    for (int i = id*n/NTHREADS; i < end; i += BS)
     {
         for (int j = 0; j + BS - 1 < n; j += BS)
         {
-            for (int k1 = i; k1 < i + BS; k1++)
+            for (register int k1 = i; k1 < i + BS; k1++)
             {
-                for (int k2 = j; k2 < j + BS; k2++)
+                for (register int k2 = j; k2 < j + BS;)
                 {
-                    c[k1 * n + k2] = a[k2 * n + n - k1 - 1];
+                    //unroll loop to reduce branch misses by a factor of 4
+                    //overly unrolling leads to poor performance maybe because of misses in 
+                    //microop cache(seen from intel performance optimization manual)
+                    c[k1 * n + k2] = a[k2 * n + n - k1 - 1], k2+=1;
+                    c[k1 * n + k2] = a[k2 * n + n - k1 - 1], k2 += 1;
+                    c[k1 * n + k2] = a[k2 * n + n - k1 - 1], k2 += 1;
+                    c[k1 * n + k2] = a[k2 * n + n - k1 - 1], k2 += 1;
                 }
             }
         }
@@ -31,7 +35,6 @@ void *rotate_worker(void *arg)
 
 int *multi_threaded_fast_rotate_270(int N, int *A)
 {
-    n = N;
     a = A;
     c = (int *)aligned_alloc(128, N * N * sizeof(int));
     int args[NTHREADS];
@@ -47,68 +50,44 @@ int *multi_threaded_fast_rotate_270(int N, int *A)
     return c;
 }
 
-// Fill in this function
-void multiThread(int N, int *matA, int *matB, int *output)
-{
-
-    memset(output, 0, sizeof(int) * ((N << 1) - 1));
-    int *C = multi_threaded_fast_rotate_270(N, matB);
-    for (int i = 0; i < N; ++i)
-    {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-        for (int j = 0; j < N; j += 8)
-        {
-            __m256i a = _mm256_loadu_si256((__m256i *)(matA + (i * N + j)));
-            __m256i b = _mm256_loadu_si256((__m256i *)(C + (i * N + j)));
-            a = _mm256_mullo_epi32(a, b);
-            __m256i op = _mm256_loadu_si256((__m256i *)(output + i + j));
-            op = _mm256_add_epi32(op, a);
-            _mm256_storeu_si256((__m256i *)(output + i + j), op);
-            // output[i + j] += matA[i * N + j] * matB[j * N + N - i - 1];
+void *multiply_worker(void *arg){
+    //upper diagonals
+    int diag_start = *(int *) arg;
+    int diag_end = *((int *) arg + 1);
+    for(int i=0; i<diag_end; i++){
+        for(int j=max(diag_start-i, 0); j<diag_end-i; j++){
+            op[i+j] += a[i*n+j] * c[i*n+j];
         }
-    }                                                                                                                                                                                                                           
-    free(C);
-/*
-    A = matA;
-    B = matB;
+    }
+    //lower diagonals
+    diag_start += n;
+    diag_end = min(diag_end+n, 2*n-1);
+    for(int i=diag_start-n; i<n; i++){
+        for(int j=diag_start-i; j<min(diag_end-i, n); j++){
+            op[i + j] += a[i * n + j] * c[i * n + j];
+        }
+    }
+}
+
+// Fill in this function
+void multiThread(int N, int *matA, int *matB, int *output, int thread_cnt)
+{
+    NTHREADS = thread_cnt;
+    memset(output, 0, sizeof(int) * ((N << 1) - 1));
     n = N;
     op = output;
-    
-    pthread_t threads[NTHREADS];
-    int args[NTHREADS];
-    int i;
-    for(i=0; i+NTHREADS<N; i+=NTHREADS){
-        for(int j=0; j<NTHREADS; j++){
-            args[j] = i+j;
-            pthread_create(&threads[j], NULL, fun1, (void*)&args[j]);
-        }
-        for(int j=0; j<NTHREADS; j++){
-            pthread_join(threads[j], NULL);
-        }
+    c = multi_threaded_fast_rotate_270(N, matB);
+    pthread_t threads[NTHREADS];                                                                                                                                                                                                                           
+    int args[NTHREADS][2];
+    int work_per_thread = N/NTHREADS;
+    int ds = 0;
+    for(int i=0; i<NTHREADS; i++){
+        args[i][0] = ds, ds+=work_per_thread;
+        args[i][1] = ds;
+        pthread_create(&threads[i], NULL, multiply_worker, (void*)&args[i]);
     }
-
-    //handling leftover
-    for (; i < N; i++)
-    {
-        fun1((void *)&i);
+    for(int i=0; i<NTHREADS; i++){
+        pthread_join(threads[i], NULL);
     }
-
-    for (i = N; i+NTHREADS < 2*N-1; i += NTHREADS)
-    {
-        for (int j = 0; j < NTHREADS; j++)
-        {
-            args[j] = i + j;
-            pthread_create(&threads[j], NULL, fun2, (void*)&args[j]);
-        }
-        for (int j = 0; j < NTHREADS; j++)
-        {
-            pthread_join(threads[j], NULL);
-        }
-    }
-
-    //handling leftover
-    for(; i<2*N-1; i++){
-        fun2((void*)&i);
-    }
-
-*/
+    free(c);
 }

@@ -113,10 +113,6 @@ int main(int argc, char *argv[])
     int *output_reference = new int[2 * N - 1];
     dummy_reference(N, matA, matB, output_reference);
 
-    // __itt_domain *domain = __itt_domain_create("DiagMM.Domain.Global");
-    // __itt_string_handle *handle_ref = __itt_string_handle_create("Reference implematation");
-    // __itt_string_handle *handle_cust = __itt_string_handle_create("Single Thread implematation");
-
     // Execute reference program
     auto begin = TIME_NOW;
     // __itt_task_begin(domain, __itt_null, __itt_null, handle_ref);
@@ -142,11 +138,12 @@ int main(int argc, char *argv[])
     
     // Execute multi-thread
     int *output_multi = new int[2 * N - 1];
-    begin = TIME_NOW;
-    multiThread(N, matA, matB, output_multi);
-    end = TIME_NOW;
-    cout << "Multi-threaded execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
-    
+    for(int i=1; i<=8; i++){
+        begin = TIME_NOW;
+        multiThread(N, matA, matB, output_multi, 1<<i);
+        end = TIME_NOW;
+        cout << "Multi-threaded execution time(" << (1<<i) << " threads): " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";
+    }
     for(int i = 0; i < 2 * N - 1; ++i)
         if(output_multi[i] != output_reference[i]) {
             cout << "Mismatch at " << i << "\n";
