@@ -2,6 +2,7 @@
 
 void singleThread(int N, int *matA, int *matB, int *output)
 {
+    memset(output, 0, sizeof(int)*(N*2-1));
     const int BS = 16; //cache block size
     for (int i = 0; i + BS - 1 < N; i += BS)
     {
