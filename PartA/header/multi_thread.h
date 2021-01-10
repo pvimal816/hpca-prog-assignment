@@ -1,7 +1,5 @@
 #include <pthread.h>
 #include <cstring>
-#include <immintrin.h>
-// #include <zmmintrin.h>
 
 int n = 0;
 int *a = NULL;
@@ -12,11 +10,13 @@ const int BS = 16; //cache block size
 
 #ifdef __AVX512__
 #define CS 16 //chunk size
+#include <zmmintrin.h>
 #endif
 
 #ifndef __AVX512__
 #ifdef __AVX2__
 #define CS 8 //chunk size
+#include <immintrin.h>
 #endif
 #endif
 
