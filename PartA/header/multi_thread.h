@@ -1,5 +1,7 @@
 #include <pthread.h>
 #include <cstring>
+#include <immintrin.h>
+// #include <zmmintrin.h>
 
 int n = 0;
 int *a = NULL;
@@ -7,6 +9,17 @@ int *c = NULL;
 int *op = NULL;
 int NTHREADS = 8;
 const int BS = 16; //cache block size
+
+#ifdef __AVX512__
+#define CS 16 //chunk size
+#endif
+
+#ifndef __AVX512__
+#ifdef __AVX2__
+#define CS 8 //chunk size
+#endif
+#endif
+
 void *rotate_worker(void *arg)
 {
     int id = *((int *)arg);
@@ -54,6 +67,91 @@ void *multiply_worker(void *arg){
     //upper diagonals
     int diag_start = *(int *) arg;
     int diag_end = *((int *) arg + 1);
+    
+#ifdef __AVX512__
+    for (int i = 0; i < diag_end; i++)
+    {
+        int n_chunk = ((diag_end - i) - max(diag_start - i, 0))/16;
+        int j = max(diag_start - i, 0);
+        for(; n_chunk>0; --n_chunk, j+=16){
+            __m512i a_ = _mm512_loadu_si512((__m512i*) &a[i*n+j]);
+            __m512i c_ = _mm512_loadu_si512((__m512i *)&c[i * n + j]);
+            __m512i op_ = _mm512_loadu_si512((__m512i *)&op[i+j]);
+            a_ = _mm512_mullo_epi32(a_, c_);
+            op_ = _mm512_add_epi32(op_, a_);
+            _mm512_storeu_si512((__m512i*)&op[i+j], op_);
+        }
+        for (; j < diag_end - i; j++)
+        {
+            op[i + j] += a[i * n + j] * c[i * n + j];
+        }
+    }
+    //lower diagonals
+    diag_start += n;
+    diag_end = min(diag_end + n, 2 * n - 1);
+    for (int i = diag_start - n; i < n; i++)
+    {
+        int j = diag_start - i;
+        int n_chunk = (min(diag_end - i, n) - j)/16;
+        for (; n_chunk > 0; --n_chunk, j += 16)
+        {
+            __m512i a_ = _mm512_loadu_si512((__m512i *)&a[i * n + j]);
+            __m512i c_ = _mm512_loadu_si512((__m512i *)&c[i * n + j]);
+            __m512i op_ = _mm512_loadu_si512((__m512i *)&op[i + j]);
+            a_ = _mm512_mullo_epi32(a_, c_);
+            op_ = _mm512_add_epi32(op_, a_);
+            _mm512_storeu_si512((__m512i *)&op[i + j], op_);
+        }
+        for (; j < min(diag_end - i, n); j++)
+        {
+            op[i + j] += a[i * n + j] * c[i * n + j];
+        }
+    }
+#else
+#ifdef __AVX2__
+    for (int i = 0; i < diag_end; i++)
+    {
+        int n_chunk = ((diag_end - i) - max(diag_start - i, 0)) / 8;
+        int j = max(diag_start - i, 0);
+        for (; n_chunk > 0; --n_chunk, j += 8)
+        {
+            __m256i a_ = _mm256_loadu_si256((__m256i *)&a[i * n + j]);
+            __m256i c_ = _mm256_loadu_si256((__m256i *)&c[i * n + j]);
+            __m256i op_ = _mm256_loadu_si256((__m256i *)&op[i + j]);
+            a_ = _mm256_mullo_epi32(a_, c_);
+            op_ = _mm256_add_epi32(op_, a_);
+            _mm256_storeu_si256((__m256i *)&op[i + j], op_);
+        }
+        for (; j < diag_end - i; j++)
+        {
+            op[i + j] += a[i * n + j] * c[i * n + j];
+        }
+    }
+    //lower diagonals
+    diag_start += n;
+    diag_end = min(diag_end + n, 2 * n - 1);
+    for (int i = diag_start - n; i < n; i++)
+    {
+        int j = diag_start - i;
+        int n_chunk = (j - max(diag_start - i, 0)) / 8;
+        for (; n_chunk > 0; --n_chunk, j += 8)
+        {
+            __m256i a_ = _mm256_loadu_si256((__m256i *)&a[i * n + j]);
+            __m256i c_ = _mm256_loadu_si256((__m256i *)&c[i * n + j]);
+            __m256i op_ = _mm256_loadu_si256((__m256i *)&op[i + j]);
+            a_ = _mm256_mullo_epi32(a_, c_);
+            op_ = _mm256_add_epi32(op_, a_);
+            _mm256_storeu_si256((__m256i *)&op[i + j], op_);
+        }
+        for (; j < min(diag_end - i, n); j++)
+        {
+            op[i + j] += a[i * n + j] * c[i * n + j];
+        }
+    }
+#endif
+#endif
+
+#ifndef CS
     for(int i=0; i<diag_end; i++){
         for(int j=max(diag_start-i, 0); j<diag_end-i; j++){
             op[i+j] += a[i*n+j] * c[i*n+j];
@@ -67,6 +165,7 @@ void *multiply_worker(void *arg){
             op[i + j] += a[i * n + j] * c[i * n + j];
         }
     }
+#endif
 }
 
 // Fill in this function
