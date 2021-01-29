@@ -67,10 +67,11 @@ int main(int argc, char *argv[])
 
     // Input matrix B
     int *matB = new int[N * N];
+    int cnt=0;
     for(int i = 0; i < N; ++i)
         for(int j = 0; j < N; ++j)
             // input_file >> matB[i * N + j];
-            matB[i*N+j] = rand();
+            matB[i*N+j] = cnt++;
     
     // Execute reference program
     int *output_reference = new int[2 * N - 1];
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
     int *output_single = new int[2 * N - 1];
     begin = TIME_NOW;    
     gpuThread(N, matA, matB, output_single);
-    end = TIME_NOW;    
+    end = TIME_NOW;
     cout << "GPU based implementation's execution time: " << (double)TIME_DIFF(std::chrono::microseconds, begin, end) / 1000.0 << " ms\n";    
     
     for(int i = 0; i < 2 * N - 1; ++i)
