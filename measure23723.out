@@ -1,0 +1,116 @@
+cl-gpusrv1.nis.csa.iisc.ac.in
+==========================================================================
+==56603== NVPROF is profiling process 56603, command: ./diag_mult_server ./data/input_4096.in
+Input matrix of size 4096
+Reference execution time: 0 ms
+GPU based implementation's execution time: 660.633 ms
+Mismatch at 0
+GPU output: 1221274265, required output: 0
+==56603== Profiling application: ./diag_mult_server ./data/input_4096.in
+==56603== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   97.71%  27.506ms         2  13.753ms  13.721ms  13.785ms  [CUDA memcpy HtoD]
+                    2.26%  637.31us         1  637.31us  637.31us  637.31us  diag_mult_kernel(int*, int*, int*, int)
+                    0.01%  3.8410us         1  3.8410us  3.8410us  3.8410us  [CUDA memcpy DtoH]
+                    0.01%  2.2400us         1  2.2400us  2.2400us  2.2400us  [CUDA memset]
+      API calls:   84.35%  261.18ms         3  87.060ms  236.59us  260.69ms  cudaMalloc
+                    9.22%  28.547ms         3  9.5158ms  670.26us  13.941ms  cudaMemcpy
+                    3.41%  10.551ms       768  13.738us     275ns  761.62us  cuDeviceGetAttribute
+                    1.81%  5.6133ms         8  701.67us  543.20us  829.07us  cuDeviceTotalMem
+                    0.86%  2.6511ms         3  883.71us  174.37us  2.2373ms  cudaFree
+                    0.31%  968.35us         8  121.04us  95.820us  158.79us  cuDeviceGetName
+                    0.01%  45.263us         1  45.263us  45.263us  45.263us  cudaLaunchKernel
+                    0.01%  31.309us         8  3.9130us  1.9860us  6.3870us  cuDeviceGetPCIBusId
+                    0.01%  21.017us         1  21.017us  21.017us  21.017us  cudaSetDevice
+                    0.01%  15.707us         1  15.707us  15.707us  15.707us  cudaMemset
+                    0.00%  9.1780us        16     573ns     308ns  1.2520us  cuDeviceGet
+                    0.00%  3.4320us         8     429ns     309ns     676ns  cuDeviceGetUuid
+                    0.00%  3.3500us         3  1.1160us     498ns  2.1960us  cuDeviceGetCount
+                    0.00%  1.8740us         1  1.8740us  1.8740us  1.8740us  cudaGetLastError
+==========================================================================
+==56652== NVPROF is profiling process 56652, command: ./diag_mult_server ./data/input_8192.in
+Input matrix of size 8192
+Reference execution time: 0 ms
+GPU based implementation's execution time: 710.679 ms
+Mismatch at 0
+GPU output: -48129383, required output: 0
+==56652== Profiling application: ./diag_mult_server ./data/input_8192.in
+==56652== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   96.72%  76.632ms         2  38.316ms  38.217ms  38.416ms  [CUDA memcpy HtoD]
+                    3.27%  2.5928ms         1  2.5928ms  2.5928ms  2.5928ms  diag_mult_kernel(int*, int*, int*, int)
+                    0.01%  6.5290us         1  6.5290us  6.5290us  6.5290us  [CUDA memcpy DtoH]
+                    0.00%  3.1680us         1  3.1680us  3.1680us  3.1680us  [CUDA memset]
+      API calls:   71.42%  258.30ms         3  86.102ms  220.34us  257.64ms  cudaMalloc
+                   21.99%  79.534ms         3  26.511ms  2.6557ms  38.513ms  cudaMemcpy
+                    2.81%  10.153ms       768  13.219us     262ns  757.27us  cuDeviceGetAttribute
+                    2.00%  7.2397ms         3  2.4132ms  169.65us  6.6503ms  cudaFree
+                    1.49%  5.3834ms         8  672.93us  533.75us  810.55us  cuDeviceTotalMem
+                    0.25%  918.87us         8  114.86us  94.444us  152.94us  cuDeviceGetName
+                    0.01%  48.271us         1  48.271us  48.271us  48.271us  cudaLaunchKernel
+                    0.01%  26.674us         8  3.3340us  1.3200us  4.5580us  cuDeviceGetPCIBusId
+                    0.01%  19.260us         1  19.260us  19.260us  19.260us  cudaSetDevice
+                    0.00%  18.033us         1  18.033us  18.033us  18.033us  cudaMemset
+                    0.00%  9.0010us        16     562ns     296ns  1.4440us  cuDeviceGet
+                    0.00%  3.4060us         3  1.1350us     396ns  2.2630us  cuDeviceGetCount
+                    0.00%  3.2990us         8     412ns     304ns     688ns  cuDeviceGetUuid
+                    0.00%  2.0510us         1  2.0510us  2.0510us  2.0510us  cudaGetLastError
+==========================================================================
+==56709== NVPROF is profiling process 56709, command: ./diag_mult_server ./data/input_16384.in
+Input matrix of size 16384
+Reference execution time: 0 ms
+GPU based implementation's execution time: 1156.76 ms
+Mismatch at 0
+GPU output: 1708030617, required output: 0
+==56709== Profiling application: ./diag_mult_server ./data/input_16384.in
+==56709== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   97.56%  458.28ms         2  229.14ms  222.49ms  235.79ms  [CUDA memcpy HtoD]
+                    2.44%  11.450ms         1  11.450ms  11.450ms  11.450ms  diag_mult_kernel(int*, int*, int*, int)
+                    0.00%  11.808us         1  11.808us  11.808us  11.808us  [CUDA memcpy DtoH]
+                    0.00%     928ns         1     928ns     928ns     928ns  [CUDA memset]
+      API calls:   59.30%  470.51ms         3  156.84ms  11.564ms  235.97ms  cudaMemcpy
+                   37.43%  297.00ms         3  99.002ms  259.89us  295.41ms  cudaMalloc
+                    1.31%  10.361ms       768  13.490us     205ns  646.64us  cuDeviceGetAttribute
+                    1.11%  8.8112ms         3  2.9371ms  176.48us  7.4347ms  cudaFree
+                    0.71%  5.6140ms         8  701.75us  622.50us  843.41us  cuDeviceTotalMem
+                    0.12%  966.33us         8  120.79us  104.86us  163.42us  cuDeviceGetName
+                    0.01%  54.422us         1  54.422us  54.422us  54.422us  cudaMemset
+                    0.00%  29.154us         8  3.6440us  2.6360us  5.4300us  cuDeviceGetPCIBusId
+                    0.00%  21.207us         1  21.207us  21.207us  21.207us  cudaLaunchKernel
+                    0.00%  18.603us         1  18.603us  18.603us  18.603us  cudaSetDevice
+                    0.00%  8.6720us        16     542ns     321ns  1.2540us  cuDeviceGet
+                    0.00%  3.4080us         3  1.1360us     394ns  2.2220us  cuDeviceGetCount
+                    0.00%  3.2570us         8     407ns     232ns     664ns  cuDeviceGetUuid
+                    0.00%  1.7100us         1  1.7100us  1.7100us  1.7100us  cudaGetLastError
+==========================================================================
+==56775== NVPROF is profiling process 56775, command: ./diag_mult_server ./data/input_32768.in
+Input matrix of size 32768
+Reference execution time: 0 ms
+GPU based implementation's execution time: 2478.25 ms
+Mismatch at 0
+GPU output: 925383321, required output: 0
+==56775== Profiling application: ./diag_mult_server ./data/input_32768.in
+==56775== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   97.94%  1.77856s         2  889.28ms  885.52ms  893.04ms  [CUDA memcpy HtoD]
+                    2.06%  37.360ms         1  37.360ms  37.360ms  37.360ms  diag_mult_kernel(int*, int*, int*, int)
+                    0.00%  21.761us         1  21.761us  21.761us  21.761us  [CUDA memcpy DtoH]
+                    0.00%     896ns         1     896ns     896ns     896ns  [CUDA memset]
+      API calls:   84.81%  1.81708s         3  605.69ms  37.573ms  893.49ms  cudaMemcpy
+                   13.69%  293.40ms         3  97.799ms  2.3008ms  286.42ms  cudaMalloc
+                    0.72%  15.322ms         3  5.1073ms  194.23us  10.766ms  cudaFree
+                    0.47%  9.9902ms       768  13.008us     299ns  632.01us  cuDeviceGetAttribute
+                    0.26%  5.5723ms         8  696.53us  618.47us  817.37us  cuDeviceTotalMem
+                    0.04%  936.00us         8  117.00us  101.74us  149.65us  cuDeviceGetName
+                    0.00%  56.486us         1  56.486us  56.486us  56.486us  cudaMemset
+                    0.00%  30.156us         8  3.7690us  1.5470us  6.0670us  cuDeviceGetPCIBusId
+                    0.00%  23.504us         1  23.504us  23.504us  23.504us  cudaLaunchKernel
+                    0.00%  22.660us         1  22.660us  22.660us  22.660us  cudaSetDevice
+                    0.00%  9.2210us        16     576ns     323ns  1.6750us  cuDeviceGet
+                    0.00%  3.8420us         8     480ns     389ns     733ns  cuDeviceGetUuid
+                    0.00%  3.5290us         3  1.1760us     411ns  2.3610us  cuDeviceGetCount
+                    0.00%  1.9480us         1  1.9480us  1.9480us  1.9480us  cudaGetLastError
+==========================================================================
+======== Error: Application received signal 139
+==========================================================================

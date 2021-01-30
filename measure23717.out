@@ -1,0 +1,43 @@
+cl-gpusrv1.nis.csa.iisc.ac.in
+==========================================================================
+==55483== NVPROF is profiling process 55483, command: ./diag_mult_server ./data/input_4096.in
+Input matrix of size 4096
+Reference execution time: 190.146 ms
+GPU based implementation's execution time: 663.999 ms
+==55483== Profiling application: ./diag_mult_server ./data/input_4096.in
+==55483== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   96.73%  18.967ms         2  9.4835ms  9.4702ms  9.4967ms  [CUDA memcpy HtoD]
+                    3.24%  635.36us         1  635.36us  635.36us  635.36us  diag_mult_kernel(int*, int*, int*, int)
+                    0.02%  3.8720us         1  3.8720us  3.8720us  3.8720us  [CUDA memcpy DtoH]
+                    0.01%  2.2400us         1  2.2400us  2.2400us  2.2400us  [CUDA memset]
+      API calls:   86.86%  286.46ms         3  95.488ms  213.89us  286.01ms  cudaMalloc
+                    6.03%  19.881ms         3  6.6269ms  663.92us  9.6229ms  cudaMemcpy
+                    4.08%  13.441ms       768  17.501us     330ns  2.3406ms  cuDeviceGetAttribute
+                    1.88%  6.1854ms         8  773.18us  677.02us  824.06us  cuDeviceTotalMem
+                    0.80%  2.6516ms         3  883.88us  171.62us  2.2294ms  cudaFree
+                    0.31%  1.0381ms         8  129.77us  111.06us  159.77us  cuDeviceGetName
+                    0.01%  46.402us         1  46.402us  46.402us  46.402us  cudaLaunchKernel
+                    0.01%  31.382us         1  31.382us  31.382us  31.382us  cudaSetDevice
+                    0.01%  26.441us         8  3.3050us  2.0310us  4.3450us  cuDeviceGetPCIBusId
+                    0.00%  15.887us         1  15.887us  15.887us  15.887us  cudaMemset
+                    0.00%  8.9710us        16     560ns     339ns  1.3490us  cuDeviceGet
+                    0.00%  4.2630us         8     532ns     373ns     652ns  cuDeviceGetUuid
+                    0.00%  3.1360us         3  1.0450us     379ns  2.0900us  cuDeviceGetCount
+                    0.00%  2.0550us         1  2.0550us  2.0550us  2.0550us  cudaGetLastError
+==========================================================================
+terminate called after throwing an instance of 'std::bad_array_new_length'
+  what():  std::bad_array_new_length
+Input matrix of size 0
+======== Error: Application received signal 134
+==========================================================================
+terminate called after throwing an instance of 'std::bad_array_new_length'
+  what():  std::bad_array_new_length
+Input matrix of size 0
+======== Error: Application received signal 134
+==========================================================================
+terminate called after throwing an instance of 'std::bad_array_new_length'
+  what():  std::bad_array_new_length
+Input matrix of size 0
+======== Error: Application received signal 134
+==========================================================================
